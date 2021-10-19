@@ -2,7 +2,7 @@
 
 namespace EmployeeManagement
 {
-    public abstract class EmployeeRecordSystem
+    public abstract class EmployeeRecordSystem   //abstract class
     {
         public  abstract void HomePage();
     }
