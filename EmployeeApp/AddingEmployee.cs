@@ -14,7 +14,7 @@ namespace EmployeeManagement
 
 
 
-        public Employee AddEmployee(string id = null, string name = null)
+        public Employee AddEmployee()
         {
 
             bool IsValidMobNo = true;
@@ -23,8 +23,7 @@ namespace EmployeeManagement
             bool IsValidEmail = true;
 
 
-            if (id == null)
-            {
+           
                 idBlock:
                 try
                 {
@@ -39,15 +38,9 @@ namespace EmployeeManagement
 
 
                 }
-            }
-            else
-            {
-                _employeeId = id;
-            }
+           
 
-
-            if (name == null)
-            {
+         
                 EmployeeName:
                 try
                 {
@@ -58,11 +51,7 @@ namespace EmployeeManagement
                     Console.WriteLine(exception.Message);
                     goto EmployeeName;
                 }
-            }
-            else
-            {
-                _employeeName = name;
-            }
+          
 
 
 

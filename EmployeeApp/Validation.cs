@@ -21,7 +21,7 @@ namespace EmployeeManagement
             }
             else
             {
-               Console.WriteLine("Enter the Employee Id which starts with ace or ACE followed by 4 digit number ");
+                Console.WriteLine("Enter the Employee Id which starts with ace or ACE followed by 4 digit number ");
                 goto IdBlock;
             }
         }
@@ -30,11 +30,24 @@ namespace EmployeeManagement
         public static string ValidateName()
         {
             EmployeeName:
+
             Console.WriteLine("Enter the Employee name");
             string Name = Console.ReadLine();
-            if (Regex.IsMatch(Name, "^[a-zA-Z\\s]*$") && Name.Length >= 4)
+            if (Regex.IsMatch(Name, "^[a-zA-Z\\s]*$") && Name.Length >= 4 && IsValidName(Name) )
             {
                 return Name;
+
+            }
+            else if (Name.Length < 4)
+            {
+                Console.WriteLine("Name should be atleast of 4 character");
+                goto EmployeeName;
+            }
+            else if (!IsValidName(Name))
+            {
+                Console.WriteLine("Name should not contain multiple occurences of same charcter");
+                goto EmployeeName;
+
             }
             else
             {
@@ -43,6 +56,20 @@ namespace EmployeeManagement
             }
         }
 
+        static bool IsValidName(string Name)
+        {
+            bool Result=true;
+                for (int Index = 0; Index < Name.Length - 2; Index++)
+                {
+                    if (Name[Index] == Name[Index + 1] && Name[Index] == Name[Index + 2])
+                    {
+                        Result = false;
+                        break;
+                    }
+
+                }
+            return Result;
+        }
 
         public static long ValidateMobileNo()
         {
@@ -81,7 +108,7 @@ namespace EmployeeManagement
             DateTime Dob = Convert.ToDateTime(Console.ReadLine());
             if (DateTime.UtcNow.Year - Dob.Year > 18 && DateTime.UtcNow.Year - Dob.Year < 60)
             {
-               return Dob;
+                return Dob;
             }
             else
             {
@@ -105,4 +132,5 @@ namespace EmployeeManagement
 
 
         }
-    }}
+    }
+}

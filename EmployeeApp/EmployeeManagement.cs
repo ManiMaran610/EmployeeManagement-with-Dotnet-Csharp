@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace EmployeeManagement
 {
@@ -38,6 +39,7 @@ namespace EmployeeManagement
                 Console.WriteLine($"Specify only the numeric values which ranges from 1 to 5.");
                 goto InputOptions;
             }
+            Thread DeleteEmployeeThread = new Thread(employee.DeleteEmployee);
            
 
 
@@ -52,7 +54,8 @@ namespace EmployeeManagement
                     Console.ReadKey();
                     goto InitialPhase;
                 case 3:
-                    employee.DeleteEmployee();
+                    DeleteEmployeeThread.Start();
+                    DeleteEmployeeThread.Join();
                     Console.ReadKey();
                     goto InitialPhase;
                 case 4:
