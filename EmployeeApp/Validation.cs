@@ -35,7 +35,8 @@ namespace EmployeeManagement
             string Name = Console.ReadLine();
             if (Regex.IsMatch(Name, "^[a-zA-Z\\s]*$") && Name.Length >= 4 && IsValidName(Name) )
             {
-                return Name;
+                
+                return char.ToUpper(Name[0]) + Name.Substring(1);
 
             }
             else if (Name.Length < 4)

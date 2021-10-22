@@ -23,6 +23,16 @@ namespace EmployeeManagement
                 else
                 {
                     employees.Add(newEmployee);
+                    String SqlAddEmployee = ("INSERT INTO EMPLOYEES VALUES(" +
+                        $"'{newEmployee.EmployeeId}'," +
+                        $"'{newEmployee.EmployeeName}'," +
+                        $"{newEmployee.EmployeeMobileNo}," +
+                        $"'{newEmployee.EmployeeDob.ToShortDateString()}'," +
+                        $"'{newEmployee.EmployeeDoj.ToShortDateString()}'," +
+                        $"'{newEmployee.EmployeeEmail}')");
+                    Console.WriteLine(SqlAddEmployee);
+                    int RowsAffected = SqlOperation.SqlInsert(SqlAddEmployee);
+                    Console.WriteLine("\n\t{0} Rows Affected",RowsAffected);
                     Console.WriteLine("\n..........Succesfully added the new Employee in the records.......");
                 }
             }
