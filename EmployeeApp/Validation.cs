@@ -17,7 +17,7 @@ namespace EmployeeManagement
             string InputId = Console.ReadLine();
             if (Regex.IsMatch(InputId, "[ace|ACE]{3}[0-9]{4}$") && (InputId.Contains("ace") || InputId.Contains("ACE")))
             {
-                return InputId;
+                return InputId.ToUpper();
             }
             else
             {
@@ -95,7 +95,7 @@ namespace EmployeeManagement
             var isValid = Regex.IsMatch(InputEmail, @"[0-9a-zA-Z]@[a-zA-Z]+(.[a-zA-Z]{2,}[a-zA-Z]*){0,}$");
             if (isValid)
             {
-                return InputEmail;
+                return InputEmail.ToLower();
             }
             else
             {

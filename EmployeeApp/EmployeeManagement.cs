@@ -18,6 +18,7 @@ namespace EmployeeManagement
         {
             
             var employee = new EmployeeDetails();
+            
 
             Console.WriteLine("\n..........EMPLOYEE MANAGEMENT SYSTEM........\n\n");
 
@@ -26,8 +27,9 @@ namespace EmployeeManagement
             Console.WriteLine("\n\n 1.Add New Employee");
             Console.WriteLine(" 2.Update Existing Employee");
             Console.WriteLine(" 3.Delete Existing Employee");
-            Console.WriteLine(" 4.Show Employee Records");
-            Console.WriteLine(" 5.QUIT");
+            Console.WriteLine(" 4.Show Employee Records stored in Collections");
+            Console.WriteLine(" 5.Show Employee Record from the DATABASE");
+            Console.WriteLine(" 6.QUIT");
 
         InputOptions:
             Console.WriteLine("\n Choose any number from the above Options : ");
@@ -36,7 +38,7 @@ namespace EmployeeManagement
 
             if (!isValidOption)
             {
-                Console.WriteLine($"Specify only the numeric values which ranges from 1 to 5.");
+                Console.WriteLine($"Specify only the numeric values which ranges from 1 to 6.");
                 goto InputOptions;
             }
             Thread DeleteEmployeeThread = new Thread(employee.DeleteEmployee);
@@ -63,6 +65,11 @@ namespace EmployeeManagement
                     Console.ReadKey();
                     goto InitialPhase;
                 case 5:
+                    employee.ShowEmployeeFromDB();
+                    Console.ReadKey();
+                    goto InitialPhase;
+
+                case 6:
                     return;
 
                 default:
