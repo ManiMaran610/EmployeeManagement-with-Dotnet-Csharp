@@ -45,38 +45,38 @@ namespace EmployeeManagement
            
 
 
-            switch (Count)
-            {
-                case 1:
-                    employee.AddNewEmployee();
-                    Console.ReadKey();
-                    goto InitialPhase;
-                case 2:
-                    employee.UpdateEmployee();
-                    Console.ReadKey();
-                    goto InitialPhase;
-                case 3:
-                    DeleteEmployeeThread.Start();
-                    DeleteEmployeeThread.Join();
-                    Console.ReadKey();
-                    goto InitialPhase;
-                case 4:
-                    employee.ShowEmployee();
-                    Console.ReadKey();
-                    goto InitialPhase;
-                case 5:
-                    employee.ShowEmployeeFromDB();
-                    Console.ReadKey();
-                    goto InitialPhase;
+            //switch (Count)
+            //{
+            //    case 1:
+            //        employee.AddNewEmployee();
+            //        Console.ReadKey();
+            //        goto InitialPhase;
+            //    case 2:
+            //        employee.UpdateEmployee();
+            //        Console.ReadKey();
+            //        goto InitialPhase;
+            //    case 3:
+            //        DeleteEmployeeThread.Start();
+            //        DeleteEmployeeThread.Join();
+            //        Console.ReadKey();
+            //        goto InitialPhase;
+            //    case 4:
+            //        employee.ShowEmployee();
+            //        Console.ReadKey();
+            //        goto InitialPhase;
+            //    case 5:
+            //        employee.ShowEmployeeFromDB();
+            //        Console.ReadKey();
+            //        goto InitialPhase;
 
-                case 6:
-                    return;
+            //    case 6:
+            //        return;
 
-                default:
-                    Console.WriteLine("Specify the number from 1 to 5");
-                    goto InitialPhase;
+            //    default:
+            //        Console.WriteLine("Specify the number from 1 to 5");
+            //        goto InitialPhase;
 
-            }
+            //}
 
         }
     }
