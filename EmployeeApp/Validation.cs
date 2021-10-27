@@ -13,7 +13,7 @@ namespace EmployeeManagement
 
         {
             IdBlock:
-            Console.WriteLine("Enter your EmployeeId For Example (\"ACE1234\")  ");
+            Console.WriteLine("\nEnter the EmployeeId For Example (\"ACE1234\")  ");
             string InputId = Console.ReadLine();
             if (Regex.IsMatch(InputId, "[ace|ACE]{3}[0-9]{4}$") && (InputId.Contains("ace") || InputId.Contains("ACE")))
             {

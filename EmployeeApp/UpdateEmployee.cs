@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Data;
+
 namespace EmployeeManagement
 {
     public class UpdateEmployee
@@ -6,81 +8,50 @@ namespace EmployeeManagement
 
         public void UsingEmployeeId(string operation)
         {
-            Console.WriteLine($"Existing EmployeeId are as follows ");
-
-            for (int Index = 0; Index < EmployeeDetails.employees.Count; Index++)
+            DataTable table = Database.ViewRecordsFromDB();
+            if (table.Rows.Count > 0)
             {
-                Console.WriteLine(EmployeeDetails.employees[Index].EmployeeId.ToUpper());
-            }
-            Console.WriteLine($"\nEnter the  EmployeeId which you want to {operation} ");
-            var input = Console.ReadLine().ToUpper();
-
-            int IndexId = EmployeeDetails.employees.FindIndex(item => item.EmployeeId.ToUpper() == input);
-            if (IndexId >= 0)
-            {
-                if (operation == "Update")
+                Console.WriteLine($"\nExisting EmployeeId from the database are as follows\n ");
+                foreach (DataRow dataRow in table.Rows)
                 {
-                    UpdateIndividualRecords(IndexId);
-                   
+                    Console.WriteLine(dataRow[0]);
                 }
-                else if (operation == "Delete")
+
+                string Input = Validation.ValidateID();
+                foreach (DataRow dataRow in table.Rows)
                 {
-                    int RowsAffected = Database.SqlOperation($"DELETE FROM EMPLOYEES WHERE EMPLOYEEID = '{EmployeeDetails.employees[IndexId].EmployeeId}'");
-                    Console.WriteLine($"\n\t{RowsAffected} Rows Affected");
-                    if (RowsAffected >= 1)
+                    bool IsMatch = dataRow[0].ToString() == Input;
+                    if (IsMatch && operation == "Update")
                     {
-                        EmployeeDetails.employees.RemoveAt(IndexId);
-                        Console.WriteLine("\n........Successfully deleted the record ");
+                        UpdateIndividualRecords(dataRow[0].ToString(), Convert.ToDateTime(dataRow[3]));
                     }
-
+                    else if (IsMatch && operation == "Delete")
+                    {
+                        int RowsAffected = Database.SqlOperation($"DELETE FROM EMPLOYEES WHERE EMPLOYEEID = '{dataRow[0]}'");
+                        Console.WriteLine($"\n\t{RowsAffected} Rows Affected");
+                        if (RowsAffected >= 1)
+                        {
+                            Console.WriteLine("\n........Successfully deleted the record ");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine($"{Input} does not match with the existing EmployeeId.");
+                    }
                 }
+
             }
             else
             {
-                Console.WriteLine($"{input} doest not exists in the Employee records ");
+                Console.WriteLine("\n..............There are no records in the database ..............");
             }
+
         }
 
-
-
-        public void UsingEmployeeName(string operation)
+        private void UpdateIndividualRecords(string EmployeeId, DateTime ExistingDob)
         {
-            Console.WriteLine($"Existing Employee Names are as follows ");
-            for (int index = 0; index < EmployeeDetails.employees.Count; index++)
-            {
-                Console.WriteLine($" {EmployeeDetails.employees[index].EmployeeName.ToUpper()}");
-            }
-            Console.WriteLine($"\n  Enter  any existing Employee Name  which you want to {operation} ");
-            var input = Console.ReadLine().ToUpper();
-            int IndexOfName = EmployeeDetails.employees.FindIndex(item => item.EmployeeName.ToUpper() == input);
-            if (IndexOfName >= 0)
-            {
-                if (operation == "Update")
-                {
-                    UpdateIndividualRecords(IndexOfName);
-                  
-                }
-                else if (operation == "Delete")
-                {
-                    int RowsAffected = Database.SqlOperation($"DELETE FROM EMPLOYEES WHERE NAME = '{EmployeeDetails.employees[IndexOfName].EmployeeName}'");
-                    Console.WriteLine($"\n\t{RowsAffected} Rows Affected");
-                    if (RowsAffected >= 1)
-                    {
-                        EmployeeDetails.employees.RemoveAt(IndexOfName);
-                        Console.WriteLine("\n........Successfully deleted the record ");
-                    }
-                }
-            }
-            else
-            {
-                Console.WriteLine($"{input} doest not exists in the Employee records ");
-            }
-        }
+        options:
 
-        private void UpdateIndividualRecords(int index)
-        {
-            options:
-            Employee existingEmployee =EmployeeDetails.employees[index];
             Console.WriteLine("\n choose the number for the options given below : \n");
             Console.WriteLine("1.ID\n2.Name\n3.MobileNumber\n4.Email\n5.Date of Birth\n6.Date of Joining");
             bool isValid = int.TryParse(Console.ReadLine(), out int option);
@@ -93,35 +64,27 @@ namespace EmployeeManagement
                     {
                         case 1:
                             string InputID = Validation.ValidateID();
-                            SqlUpdateRecord("EMPLOYEEID", InputID, existingEmployee.EmployeeId);
-                            existingEmployee.EmployeeId = InputID;
+                            SqlUpdateRecord("EMPLOYEEID", InputID, EmployeeId);
                             break;
                         case 2:
                             string InputName = Validation.ValidateName();
-                            SqlUpdateRecord("NAME", InputName, existingEmployee.EmployeeId);
-                            existingEmployee.EmployeeName = InputName;
+                            SqlUpdateRecord("NAME", InputName, EmployeeId);
                             break;
                         case 3:
                             long InputMobileNo = Validation.ValidateMobileNo();
-                            SqlUpdateRecord("MOBILENO", InputMobileNo, existingEmployee.EmployeeId);
-                            existingEmployee.EmployeeMobileNo = InputMobileNo;
+                            SqlUpdateRecord("MOBILENO", InputMobileNo, EmployeeId);
                             break;
-
                         case 4:
                             string InputEmail = Validation.ValidateEmail();
-                            SqlUpdateRecord("EMAIL", InputEmail, existingEmployee.EmployeeId);
-                            existingEmployee.EmployeeEmail = InputEmail;
+                            SqlUpdateRecord("EMAIL", InputEmail, EmployeeId);
                             break;
                         case 5:
                             DateTime InputDOB = Validation.ValidateDOB();
-                            SqlUpdateRecord("DATEOFBIRTH", InputDOB.ToShortDateString(), existingEmployee.EmployeeId);
-                            existingEmployee.EmployeeDob = InputDOB;
+                            SqlUpdateRecord("DATEOFBIRTH", InputDOB.ToShortDateString(), EmployeeId);
                             break;
                         case 6:
-                            DateTime InputDOJ = Validation.ValidateDOJ(existingEmployee.EmployeeDoj);
-                            SqlUpdateRecord("DATEOFJOINING", InputDOJ.ToShortDateString(),existingEmployee.EmployeeId);
-                            existingEmployee.EmployeeDoj = InputDOJ;
-                         
+                            DateTime InputDOJ = Validation.ValidateDOJ(ExistingDob);
+                            SqlUpdateRecord("DATEOFJOINING", InputDOJ.ToShortDateString(), EmployeeId);
                             break;
                         default:
                             Console.WriteLine("The Valid Option number is from 1 to 6 ");
@@ -145,7 +108,7 @@ namespace EmployeeManagement
         {
             int RowsAffected = Database.SqlOperation($"UPDATE EMPLOYEES SET {ColumnName} = '{Value}' WHERE EMPLOYEEID ='{EmployeeId}'");
             Console.WriteLine($"\n\t{RowsAffected} Rows Affected");
-            if(RowsAffected >= 1)
+            if (RowsAffected >= 1)
             {
                 Console.WriteLine("\n.......Succesfully Updated the record ");
             }

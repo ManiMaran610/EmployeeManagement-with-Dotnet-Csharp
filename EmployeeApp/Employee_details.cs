@@ -50,31 +50,17 @@ namespace EmployeeManagement
 
         public void DeleteEmployee()
         {
-            deleteblock:
-            Console.WriteLine("\nTo delete the record ,Choose any of the options given below");
-            Console.WriteLine("\n   1.Delete Employee with EmployeeID\n   2.Delete Employee with Employee Name");
-            bool isValidOption = int.TryParse(Console.ReadLine(), out int deleteOption);
-            if (isValidOption)
+           
+            try
             {
-                if (deleteOption == 1)
-                {
-                    updateEmployee.UsingEmployeeId(operation: "Delete");
+                Console.WriteLine("\nTo Delete the Exisiting data ,Choose any one of the EmployeeId given below");
 
-                }
-                else if (deleteOption == 2)
-                {
-                    updateEmployee.UsingEmployeeName(operation: "Delete");
-                }
-                else
-                {
-                    Console.WriteLine("Specify only the numeric digits 1 or 2");
-                    goto deleteblock;
-                }
+                updateEmployee.UsingEmployeeId(operation: "Delete");
             }
-            else
+            catch (Exception Exception)
             {
-                Console.WriteLine("Specify only the numeric digits ");
-                goto deleteblock;
+                Console.WriteLine(Exception.Message);
+
             }
 
         }
@@ -95,34 +81,18 @@ namespace EmployeeManagement
         }
         public void UpdateEmployee()
         {
-            updateblock:
-            Console.WriteLine("\nTo Update the Exisiting data ,Select any of the Options given below");
-            Console.WriteLine("\n   1.Update Employee with EmployeeID\n   2.Update Employee with Employee Name");
-            bool isValidUpdateOption = int.TryParse(Console.ReadLine(), out int updateOption);
-            if (isValidUpdateOption)
+        
+            try
             {
-                if (updateOption == 1)
-                {
-                    updateEmployee.UsingEmployeeId(operation: "Update");
+                Console.WriteLine("\nTo Update the Exisiting data ,Choose any one of the EmployeeId given below");
 
-                }
-                else if (updateOption == 2)
-                {
-                    updateEmployee.UsingEmployeeName(operation: "Update");
-                }
-                else
-                {
-                    Console.WriteLine("Specify only the numeric digits 1 or 2");
-                    goto updateblock;
-                }
-            }
-            else
+                updateEmployee.UsingEmployeeId(operation: "Update");
+            }catch (Exception Exception)
             {
-                Console.WriteLine("Specify only the numeric digits ");
-                goto updateblock;
+                Console.WriteLine(Exception.Message);
+
             }
         }
-
 
         public void ShowEmployee()
         {
