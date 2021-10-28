@@ -39,7 +39,6 @@ namespace EmployeeManagement
                         Console.WriteLine($"{Input} does not match with the existing EmployeeId.");
                     }
                 }
-
             }
             else
             {
@@ -80,11 +79,11 @@ namespace EmployeeManagement
                             break;
                         case 5:
                             DateTime InputDOB = Validation.ValidateDOB();
-                            SqlUpdateRecord("DATEOFBIRTH", InputDOB.ToShortDateString(), EmployeeId);
+                            SqlUpdateRecord("DATEOFBIRTH", InputDOB.ToString("MM/dd/yyyy"), EmployeeId);
                             break;
                         case 6:
                             DateTime InputDOJ = Validation.ValidateDOJ(ExistingDob);
-                            SqlUpdateRecord("DATEOFJOINING", InputDOJ.ToShortDateString(), EmployeeId);
+                            SqlUpdateRecord("DATEOFJOINING", InputDOJ.ToString("MM/dd/yyyy"), EmployeeId);
                             break;
                         default:
                             Console.WriteLine("The Valid Option number is from 1 to 6 ");

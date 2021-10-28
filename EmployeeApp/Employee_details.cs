@@ -24,18 +24,20 @@ namespace EmployeeManagement
                 }
                 else
                 {
+                   
                     employees.Add(newEmployee);
                     String SqlAddEmployee = ("INSERT INTO EMPLOYEES VALUES(" +
                         $"'{newEmployee.EmployeeId}'," +
                         $"'{newEmployee.EmployeeName}'," +
                         $"{newEmployee.EmployeeMobileNo}," +
-                        $"'{newEmployee.EmployeeDob.ToShortDateString()}'," +
-                        $"'{newEmployee.EmployeeDoj.ToShortDateString()}'," +
+                        $"'{newEmployee.EmployeeDob.ToString("MM/dd/yyyy")}'," +
+                        $"'{newEmployee.EmployeeDoj.ToString("MM/dd/yyyy")}'," +
                         $"'{newEmployee.EmployeeEmail}')");
-                    Console.WriteLine(SqlAddEmployee);
+                    
                     int RowsAffected = Database.SqlOperation(SqlAddEmployee);
                     Console.WriteLine("\n\t{0} Rows Affected", RowsAffected);
                     Console.WriteLine("\n..........Succesfully added the new Employee in the records.......");
+                    
                 }
             }
             catch (EmployeeNameAlreadyExistsException EmployeeNameAlreadyExistsException)
@@ -73,7 +75,7 @@ namespace EmployeeManagement
             {
                 Console.WriteLine("-----------------------------------------------------------------------------");
                 Console.WriteLine($"EmployeeID :{dataRow[0]}\nNAME :{dataRow[1]}\n" +
-                    $"MobileNo :{dataRow[2]}\nDOB :{dataRow[3]}\nDOJ :{dataRow[4]}\nEmail :{dataRow[5]}");
+                    $"MobileNo :{dataRow[2]}\nDOB :{Convert.ToDateTime(dataRow[3]).ToString("dd/MM/yyyy")}\nDOJ :{Convert.ToDateTime(dataRow[4]).ToString("dd/MM/yyyy")}\nEmail :{dataRow[5]}");
             }
 
            
